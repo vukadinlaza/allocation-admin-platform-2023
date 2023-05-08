@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   const getFullName = () => {
     if (!user) return '';
-    if (user.infos.first_name) return user.infos.first_name;
+    if (user?.infos?.first_name) return user.infos.first_name;
     return user.email;
   };
 

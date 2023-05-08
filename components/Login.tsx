@@ -64,10 +64,10 @@ export default function Login() {
       style={{ width: '400px' }}
     >
       <div className="mb-4">
-        <Logo />
+        <Logo url={'/logo.png'} />
       </div>
       <p className="mb-4">
-        Welcome to Allocations v2.0.
+        Welcome to Allocations v2.0 Admin Panel.
         <br />
         Please enter your e-mail to login.
       </p>
