@@ -1,15 +1,13 @@
-'use client';
-import { Grid } from '@mui/material';
 import Line from './Line';
 
 export default function List() {
   return (
-    <Grid className="w-full" container spacing={1}>
+    <div className="flex flex-col items-center gap-4 p-4">
       {Array.from({ length: 6 }).map((x, i) => (
-        <Grid item xs={12} key={i}>
+        <div key={i} className="w-full h-10 gap-4">
           <Line />
-        </Grid>
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 }

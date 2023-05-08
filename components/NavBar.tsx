@@ -13,6 +13,8 @@ import { useAuthContext } from '@/app/context';
 import SearchBox from './SearchBox/SearchBox';
 import AvatarComponent from './AvatarOld';
 import Logo from './Logo';
+import { useQuery } from 'react-query';
+import supabase from '@/lib/supabase';
 // import SearchBox from "./SearchBox";
 // import { useSupabaseClient } from "@supabase/auth-helpers-react";
 // import LoginOrSignupModal from "../auth_modal/LoginOrSignupModal";
@@ -41,6 +43,24 @@ interface HeaderProps {
 export function NavBar({ loading }: HeaderProps) {
   // const router = useRouter();
   const { user, signOut, setCurrentOrganization } = useAuthContext();
+
+  const {
+    data: organizations,
+    isLoading,
+    error
+  } = useQuery('organizations', async () => {
+    const { data: _data, count } = await supabase
+      .from('organizations')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: true });
+
+    if (_data && _data.length > 0) {
+      return _data;
+    }
+
+    return [];
+  });
+
   // const userProfile = useGlobalState((s) => s.userProfile);
   // const setGlobalState = useGlobalState((s) => s.setGlobalState);
   // const clientSupabase = useSupabaseClient();
@@ -148,11 +168,6 @@ export function NavBar({ loading }: HeaderProps) {
             <div className="lg:pr-0 md:pr-6 pr-4">
               {/* Website Logo */}
               <div className="relative  flex-shrink-0">
-                {/* <Link href={'/'}> */}
-                {/* <a
-                    className="flex items-center gap-4"
-                    // data-tour={homeFeedStep}
-                  > */}
                 <div className="h-10 w-10">
                   <Logo url={'/allocations_logo.svg'} />
                 </div>
@@ -161,23 +176,25 @@ export function NavBar({ loading }: HeaderProps) {
                     ALLOCATIONS
                   </h1>
                 )}
-                {/* </a> */}
-                {/* </Link> */}
               </div>
             </div>
             {user && !loading && <SearchBox />}
             <div className="mr-2 select">
-              <select onChange={(e) => setCurrentOrganization(e.target.value)}>
-                {user.organizations && user.organizations.length < 1 && (
+              <select
+                onChange={(e) => setCurrentOrganization(e.target.value)}
+                style={{ maxWidth: '150px' }}
+                className="block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              >
+                {organizations && organizations.length < 1 && (
                   <option selected>
-                    {user.infos.is_super_admin
+                    {user.is_super_admin
                       ? 'All organizations'
                       : 'No organization'}
                   </option>
                 )}
-                {user.organizations &&
-                  user.organizations.length > 0 &&
-                  user.organizations.map((organization: Organization) => (
+                {organizations &&
+                  organizations.length > 0 &&
+                  organizations.map((organization: Organization) => (
                     <option
                       className="text-xs"
                       key={organization.id}
@@ -196,19 +213,6 @@ export function NavBar({ loading }: HeaderProps) {
                 <>
                   <div className="hidden md:flex items-center lg:space-x-6 space-x-5 lg:pl-0 md:pl-6 pl-4 flex-shrink-0">
                     <DropdownMenu logout={() => signOut()} />
-                    {/* <AvatarComponent /> */}
-                    {/* <Link href="/inbox">
-                      <a className="relative mr-1.5">
-                        <FontAwesomeIcon
-                          icon={faComment}
-                          className="hover:text-gray-500 text-gray-400 w-6 h-6"
-                        /> 
-                        {unseenMessagesCount !== null &&
-                          unseenMessagesCount !== 0 && (
-                            <NotificationNumber amount={unseenMessagesCount} />
-                          )}
-                      </a>
-                    </Link> */}
                     <Menu as="div" className="relative inline-block text-left ">
                       <>
                         <div>

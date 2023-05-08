@@ -33,7 +33,7 @@ $primary: #3db278;
       @apply font-medium cursor-pointer rounded-lg px-4 py-2 mr-2;
 
       &.primary {
-        @apply bg-primary hover:bg-primaryLight text-white;
+        @apply bg-primary-400 hover:bg-primary-300 text-white;
 
         &:disabled {
           @apply disabled;
@@ -58,6 +58,19 @@ $primary: #3db278;
   .card {
     @apply flex flex-col items-center justify-center p-8 mb-6;
 
+    &--popup {
+      header,
+      main {
+        @apply py-4 px-6;
+      }
+      header {
+        @apply flex items-center justify-between border-b py-4 px-6;
+      }
+      main {
+        @apply pb-8;
+      }
+    }
+
     header {
       @apply flex items-start justify-between w-full mb-4;
     }
@@ -80,7 +93,7 @@ $primary: #3db278;
     }
 
     &--primary {
-      @apply bg-primary;
+      @apply bg-primary-400;
     }
   }
 
@@ -144,7 +157,7 @@ $primary: #3db278;
         }
 
         &.active {
-          @apply font-bold text-white bg-primary;
+          @apply font-bold text-white bg-primary-400;
         }
       }
     }
@@ -164,10 +177,10 @@ $primary: #3db278;
   }
 
   .upload {
-    @apply cursor-pointer w-full border border-dashed border-primary rounded-lg transition flex flex-col items-center justify-center;
+    @apply cursor-pointer w-full border border-dashed border-primary-400 rounded-lg transition flex flex-col items-center justify-center;
 
     &--zone {
-      @apply hover:bg-primary/5 h-32 w-full flex flex-col items-center justify-center;
+      @apply hover:bg-primary-400/5 h-32 w-full flex flex-col items-center justify-center;
       &:hover {
         img {
           @apply opacity-100 scale-105 transition;

@@ -39,33 +39,6 @@ export default function PageList({
 
   const { user } = useAuthContext();
 
-  // const fetchData = async () => {
-  //   if (!user || !table) return;
-  //   try {
-  //     setLoading(true);
-
-  //     let request = supabase
-  //       .from(table)
-  //       .select(query ?? `*`, { count: 'exact' })
-  //       .order('created_at', { ascending: true });
-
-  //     if (queryType) {
-  //       request = request.eq('type', queryType);
-  //     }
-
-  //     let { data: _data, count }: any = await request;
-
-  //     if (_data && _data.length > 0) {
-  //       setInitialData(_data);
-  //       if (count) setInitialDataCount(count);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const { data: initialData, isLoading: initialLoading } = useQuery(
     [table, query, queryType],
     async () => {
@@ -76,26 +49,11 @@ export default function PageList({
         .order('created_at', { ascending: true });
 
       if (_data && _data.length > 0) {
-        // setInitialDataCount(count ?? 0);
         return _data;
       }
       return [];
     }
   );
-
-  const searchFetchData = async () => {
-    if (!user || !search) return [];
-    const { data: _results }: { data: any } = await supabase
-      .from(table)
-      .select()
-      .ilike('name', `%${search || ''}%`);
-
-    if (_results && _results.length > 0) {
-      return _results;
-    }
-
-    return [];
-  };
 
   const { data: results, isLoading: searchLoading } = useQuery(
     ['search', table, search],
@@ -117,34 +75,6 @@ export default function PageList({
       refetchOnWindowFocus: false
     }
   );
-
-  // const onSearch = async () => {
-  //   if (!user && !search) return;
-  //   try {
-  //     setLoading(true);
-  //     let { data: _results }: { data: any } = await supabase
-  //       .from(table)
-  //       .select()
-  //       .textSearch('name', search || '', {
-  //         type: 'websearch'
-  //       })
-  //       .eq('type', type);
-
-  //     if (_results && _results.length > 0) {
-  //       setResults(_results);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (headersTable) {
-  //     setFilterKeys(headersTable.map((header: any) => header.key));
-  //   }
-  // }, []);
 
   return (
     <main style={{ display: 'flex', alignItems: 'stretch' }}>

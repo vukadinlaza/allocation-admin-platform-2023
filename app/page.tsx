@@ -40,9 +40,9 @@ export default function Dashboard() {
       )}
       {!loading && (
         <Grid item xs={12}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <h1 className="mb-4">Welcome back {getFullName()}!</h1>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <PageList
               header={getHeader()}

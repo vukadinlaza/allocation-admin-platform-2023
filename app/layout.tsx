@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: true // we can turn this off after we are done with development
+      refetchOnWindowFocus: false // we can turn this off after we are done with development
     }
   }
 });

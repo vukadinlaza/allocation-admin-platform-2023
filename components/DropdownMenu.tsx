@@ -13,6 +13,8 @@ export default function DropdownMenu({ logout }: { logout: () => void }) {
     { label: 'Settings', url: '/account', openInNewTab: false }
   ];
 
+  console.log(user);
+
   return (
     <Menu as="div" className="relative inline-block text-left ">
       <div>
@@ -66,20 +68,8 @@ export default function DropdownMenu({ logout }: { logout: () => void }) {
             </p>
 
             <p className="text-xs leading-4 font-normal text-center pb-2">
-              {user?.is_sponsor === true ? 'Sponsor' : 'Investor'}
+              Administrator
             </p>
-
-            {user && user?.current_org_id && (
-              <div className="flex gap-2 items-center py-3 px-4">
-                <div
-                  className="w-[20px] h-[20px] bg-gradient-to-r from-[#166534] to-[#1BD05F] rounded-full mr-2"
-                  style={{
-                    background:
-                      'linear-gradient(287.2deg, #166534 7.5%, #1BD05F 92.91%)'
-                  }}
-                ></div>
-              </div>
-            )}
           </div>
           <div className="border-t-1 border-t-gray-200">
             <Menu.Item>
