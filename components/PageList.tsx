@@ -9,6 +9,12 @@ import { useEffect, useState } from 'react';
 import List from './List';
 import MissingData from './MissingData';
 import None from './None';
+import SearchBox from './SearchBox/SearchBox';
+import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
+import { navigation } from '@/app/config';
+import classNames from 'classnames';
+import { useQuery } from 'react-query';
 
 interface PageListInterface {
   header?: any;
@@ -28,104 +34,158 @@ export default function PageList({
   queryType
 }: PageListInterface) {
   const [search, setSearch] = useState<string | null>(null);
-  const [initialData, setInitialData] = useState<Array<any>>([]);
-  const [results, setResults] = useState<Array<any>>([]);
-  const [initialDataCount, setInitialDataCount] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [filterKeys, setFilterKeys] = useState<Array<any>>([]);
+  const pathname = usePathname();
+  const { push } = useRouter();
 
   const { user } = useAuthContext();
 
-  const fetchData = async () => {
-    if (!user || !table) return;
-    try {
-      setLoading(true);
+  // const fetchData = async () => {
+  //   if (!user || !table) return;
+  //   try {
+  //     setLoading(true);
 
-      let request = supabase
+  //     let request = supabase
+  //       .from(table)
+  //       .select(query ?? `*`, { count: 'exact' })
+  //       .order('created_at', { ascending: true });
+
+  //     if (queryType) {
+  //       request = request.eq('type', queryType);
+  //     }
+
+  //     let { data: _data, count }: any = await request;
+
+  //     if (_data && _data.length > 0) {
+  //       setInitialData(_data);
+  //       if (count) setInitialDataCount(count);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const { data: initialData, isLoading: initialLoading } = useQuery(
+    [table, query, queryType],
+    async () => {
+      if (!user || !table) return [];
+      const { data: _data, count }: any = await supabase
         .from(table)
         .select(query ?? `*`, { count: 'exact' })
         .order('created_at', { ascending: true });
 
-      if (queryType) {
-        request = request.eq('type', queryType);
-      }
-
-      let { data: _data, count }: any = await request;
-
       if (_data && _data.length > 0) {
-        setInitialData(_data);
-        if (count) setInitialDataCount(count);
+        // setInitialDataCount(count ?? 0);
+        return _data;
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
+      return [];
     }
+  );
+
+  const searchFetchData = async () => {
+    if (!user || !search) return [];
+    const { data: _results }: { data: any } = await supabase
+      .from(table)
+      .select()
+      .ilike('name', `%${search || ''}%`);
+
+    if (_results && _results.length > 0) {
+      return _results;
+    }
+
+    return [];
   };
 
-  const onSearch = async () => {
-    if (!user && !search) return;
-    try {
-      setLoading(true);
-      let { data: _results }: { data: any } = await supabase
+  const { data: results, isLoading: searchLoading } = useQuery(
+    ['search', table, search],
+    async () => {
+      if (!user || !search) return [];
+      const { data: _results }: { data: any } = await supabase
         .from(table)
         .select()
-        .textSearch('name', search || '', {
-          type: 'websearch'
-        })
-        .eq('type', type);
+        .ilike('name', `%${search || ''}%`);
+      // .eq('type', type);
 
       if (_results && _results.length > 0) {
-        setResults(_results);
+        return _results;
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
+      return [];
+    },
+    {
+      enabled: !!search && search.length > 0,
+      refetchOnWindowFocus: false
     }
-  };
+  );
 
-  useEffect(() => {
-    if (search && search.length > 0) {
-      setLoading(true);
-      const _search = setTimeout(() => {
-        //     onSearch();
-        const filtered = initialData.filter((x) => {
-          for (const key of filterKeys) {
-            if (!x[key]) return false;
-            if (x[key].toLowerCase().includes(search.toLowerCase())) {
-              return true;
-            }
-          }
-          return false;
-        });
-        setResults(filtered);
-        setLoading(false);
-        return;
-      }, 1000);
-      return () => clearTimeout(_search);
-    }
-    setResults([]);
-    setLoading(false);
-  }, [search]);
+  // const onSearch = async () => {
+  //   if (!user && !search) return;
+  //   try {
+  //     setLoading(true);
+  //     let { data: _results }: { data: any } = await supabase
+  //       .from(table)
+  //       .select()
+  //       .textSearch('name', search || '', {
+  //         type: 'websearch'
+  //       })
+  //       .eq('type', type);
 
-  useEffect(() => {
-    fetchData();
-    if (headersTable) {
-      setFilterKeys(headersTable.map((header: any) => header.key));
-    }
-  }, []);
+  //     if (_results && _results.length > 0) {
+  //       setResults(_results);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (headersTable) {
+  //     setFilterKeys(headersTable.map((header: any) => header.key));
+  //   }
+  // }, []);
 
   return (
-    <main>
-      <Card className="card" variant="outlined">
+    <main style={{ display: 'flex', alignItems: 'stretch' }}>
+      <aside className="lg:col-span-3 lg:py-0 lg:px-3 lg:py-0">
+        <select
+          onChange={(e) => push(e.target.value)}
+          className="lg:hidden w-full rounded-md border-0 text-sm leading-5 h-10 focus:border-0 focus:ring-0"
+        >
+          {navigation.map(({ name, href }) => (
+            <option key={name} value={href} selected={pathname === href}>
+              {name}
+            </option>
+          ))}
+        </select>
+        <nav className="space-y-1 hidden lg:block">
+          {navigation.map(({ name, href }) => (
+            <Link
+              className={classNames(
+                pathname === href
+                  ? 'bg-sky-200 text-blue-700 '
+                  : 'text-gray-900 hover:text-gray-900 hover:bg-gray-50',
+                'group rounded-md px-3 py-2 flex items-center font-medium text-sm'
+              )}
+              key={href}
+              href={href}
+            >
+              <span className="truncate">{name}</span>
+            </Link>
+          ))}
+        </nav>
+      </aside>
+      <Card style={{ width: '100%' }} className="card" variant="outlined">
         <header>
           <div>
             <h1 className="mb-2">
               <span className="mr-2">{header.name || 'No title'}</span>
-              <div className="chip chip--small chip--info">
-                {initialDataCount}
-              </div>
+              {initialData && (
+                <div className="chip chip--small chip--info">
+                  {initialData?.length}
+                </div>
+              )}
             </h1>
             <p>{header.description || 'No description'}</p>
           </div>
@@ -155,26 +215,26 @@ export default function PageList({
               }}
             />
           </Grid>
-          {user && user.infos && user.infos.is_super_admin && (
+          {/* {user && user.infos && user.infos.is_super_admin && (
             <Grid item xs={4} className="mb-4">
               <Alert severity="success">
                 As an admin, you can look & edit for any {table}.
               </Alert>
             </Grid>
-          )}
+          )} */}
         </Grid>
         <Grid container>
-          {loading && (
+          {(initialLoading || searchLoading) && (
             <Grid item xs={12} className="w-full">
               <LoadingList />
             </Grid>
           )}
-          {!loading && (
+          {!initialLoading && !searchLoading && (
             <Grid item xs={12} className="w-full">
               {search && (
                 <div className="onsearch">
-                  {!results.length && <MissingData />}
-                  {results.length > 0 && (
+                  {!results?.length && <MissingData />}
+                  {results?.length > 0 && (
                     <List type={type} headers={headersTable} data={results} />
                   )}
                 </div>

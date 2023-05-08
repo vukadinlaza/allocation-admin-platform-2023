@@ -1,6 +1,7 @@
 'use client';
 import Header from '@/components/Header';
 import Login from '@/components/Login';
+import { NavBar } from '@/components/NavBar';
 import SlideOver from '@/components/SlideOver';
 import supabase from '@/lib/supabase';
 import {
@@ -189,7 +190,8 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {user && <Header loading={loading} />}
+      {/* {user && <Header loading={loading} />} */}
+      {user && <NavBar loading={loading} />}
       <div>
         {!user && !loading && (
           <div className="my-12">
@@ -198,7 +200,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
         )}
         {user && (
           <div className="px-5 my-6">
-            <Collapse in={betaAlert}>
+            {/* <Collapse in={betaAlert}>
               <Alert
                 className="mb-6 "
                 icon={<SpaceDashboardOutlined className=" text-primary" />}
@@ -223,60 +225,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
                   future of our new product.
                 </span>
               </Alert>
-            </Collapse>
-            {/* <SlideOverContent
-              data={{
-                data: {
-                  id: '75087e2b-86c5-4b17-b721-a0c412af6a31',
-                  created_at: '2023-04-26T19:35:30.005226+00:00',
-                  updated_at: '2023-04-26T19:35:30.005226+00:00',
-                  accept_crypto: false,
-                  asset_type: 'Startup',
-                  carry_fee: '0',
-                  closing_date: '2018-12-26T00:00:00.000Z',
-                  closed: false,
-                  company_name: 'Bakkt',
-                  deal_term: '10 years',
-                  documents: null,
-                  elevated_returns: false,
-                  entity_id: 'null',
-                  entity_name: 'AS Bruch Fund LLC',
-                  international_investors: false,
-                  invited_investors: 'null',
-                  legacy_manager_email: 'null',
-                  legacy_manager_name: 'null',
-                  legacy_organization_name: 'null',
-                  management_fee: '0',
-                  management_fee_dollar: 'null',
-                  management_fee_frequency: 'null',
-                  management_fee_percent: 'null',
-                  management_fee_type: 'null',
-                  manager_email: 'null',
-                  manager_type: 'individual',
-                  minimum_investment: '10000',
-                  mongo_id: '5de560a92817ed4e5b8a7afa',
-                  mongo_organization_id: '5e4d9a334ffe0530c9350d40',
-                  name: 'Bakkt',
-                  offering_type: 'null',
-                  onboarding_link: 'null',
-                  owner_mongo_id: 'null',
-                  portfolio_company_name: 'Bakkt',
-                  series_name: 'null',
-                  setup_cost: '0',
-                  side_letters: false,
-                  sign_deadline: 'null',
-                  status: 'closed',
-                  target: 'null',
-                  target_raise_goal: '0',
-                  total_carry: 'null',
-                  total_round_size: 'null',
-                  type: 'spv',
-                  wire_deadline: '2018-12-27T22:00:00.000Z',
-                  user_email: 'null'
-                },
-                type: 'spvs'
-              }}
-            /> */}
+            </Collapse> */}
             {children}
             <SlideOver open={open} setOpen={setOpen} data={slideOverData} />
           </div>

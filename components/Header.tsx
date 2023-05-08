@@ -4,13 +4,15 @@ import { navigation } from '@/app/config';
 import { useAuthContext } from '@/app/context';
 import supabase from '@/lib/supabase';
 import { Organization } from '@/types';
-import { Chip } from '@mui/material';
+import { Search } from '@mui/icons-material';
+import { Chip, InputAdornment, TextField } from '@mui/material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import AvatarComponent from './Avatar';
+import AvatarComponent from './AvatarOld';
 import Feedback from './Feedback';
 import Logo from './Logo';
+import SearchBox from './SearchBox/SearchBox';
 
 interface HeaderProps {
   loading: boolean;
@@ -81,7 +83,7 @@ export default function Header({ loading }: HeaderProps) {
     <div className="header">
       <div className="header--main">
         <div>
-          <Logo />
+          <Logo url={'/allocations_logo.svg'} />
         </div>
         <div className="flex items-center justify-end w-full grow">
           {loading && (
@@ -109,6 +111,7 @@ export default function Header({ loading }: HeaderProps) {
                       )}
                     </div>
                   )}
+                  {user && <SearchBox />}
                   <Feedback />
                   <div className="mr-2 select">
                     <select
