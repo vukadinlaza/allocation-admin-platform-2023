@@ -1,47 +1,15 @@
-import { useEffect } from 'react';
-import Link from 'next/link';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faComment } from "@fortawesome/free-regular-svg-icons";
-// import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-// import { faBell } from "@fortawesome/pro-regular-svg-icons";
+import { Fragment } from 'react';
 import DropdownMenu from './DropdownMenu';
 import { Organization } from '@/types';
-import { useRouter } from 'next/router';
-// import NotificationMenu from "./NotificationMenu";
+import { useRouter } from 'next/navigation';
 import { Menu, Transition } from '@headlessui/react';
 import { useAuthContext } from '@/app/context';
 import SearchBox from './SearchBox/SearchBox';
-import AvatarComponent from './AvatarOld';
 import Logo from './Logo';
 import { useQuery } from 'react-query';
 import supabase from '@/lib/supabase';
-// import SearchBox from "./SearchBox";
-// import { useSupabaseClient } from "@supabase/auth-helpers-react";
-// import LoginOrSignupModal from "../auth_modal/LoginOrSignupModal";
-// import EditProfileModal from "www/pages/profile/EditProfileModal";
-// import { useQuery } from 'react-query';
-// import {
-//   fetchUnseenMessagesCount,
-//   NotificationQueryKey,
-//   fetchNotifications,
-// } from "./NotificationMenu.fetchers";
-import { Fragment, useState, forwardRef } from 'react';
-// import { classNames } from "www/shared/utils";
-// import NotificationNumber from "./NotificationNumber";
-// import { homeFeedStep, welcomeStep } from "www/pages/deal/DealTourProvider";
-// import Image from "next/future/image";
 
-interface NavLinkProps {
-  label: string;
-  href: string;
-}
-
-interface HeaderProps {
-  loading: boolean;
-}
-
-export function NavBar({ loading }: HeaderProps) {
-  // const router = useRouter();
+export function NavBar() {
   const { user, signOut, setCurrentOrganization } = useAuthContext();
 
   const {
@@ -61,107 +29,8 @@ export function NavBar({ loading }: HeaderProps) {
     return [];
   });
 
-  // const userProfile = useGlobalState((s) => s.userProfile);
-  // const setGlobalState = useGlobalState((s) => s.setGlobalState);
-  // const clientSupabase = useSupabaseClient();
-  // const isAuthModalOpen = useGlobalState((s) => s.isAuthModalOpen);
-  // const isUpdateModalOpen = useGlobalState((s) => s.isUpdateModalOpen);
-  // const authModalVariant = useGlobalState((s) => s.authModalVariant);
-  // const processLogout = async () => {
-  //   const { error } = await clientSupabase.auth.signOut();
-  //   console.log('Logging out:', error);
-  //   setGlobalState({ supabaseUser: null, userProfile: null });
-  //   router.push('/');
-  // };
-  // const setOpenAuthModal = (open: boolean) => {
-  //   setGlobalState({ isAuthModalOpen: open });
-  // };
-  // const setUpdateModalOpen = (open: boolean) => {
-  //   setGlobalState({ isUpdateModalOpen: open });
-  // };
-
-  // const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  // const [isMobileNotificationMenuOpen, setIsMobileNotificationMenuOpen] =
-  //   useState(false);
-
-  // useEffect(() => {
-  //   document.body.style.overflow = isMobileNavOpen ? 'hidden' : 'unset';
-  // }, [isMobileNavOpen]);
-
-  // const public_routes: string[] = [
-  //   '/deal/[handle]/[access]',
-  //   '/deal/[handle]/e/[email_hash]'
-  // ];
-  // const isReferralPageOnly = public_routes.includes(router.route);
-
-  // const { data: unseenMessagesCount } = useQuery({
-  //   queryKey: [NotificationQueryKey.UnreadInboxMessages, supabaseUser?.id],
-  //   queryFn: () => fetchUnseenMessagesCount(supabaseUser?.id!),
-  //   onError: (err) => {
-  //     console.log('err', err);
-  //   },
-  //   refetchInterval: 1000 * 60, // refetch every minute
-  //   refetchIntervalInBackground: false,
-  //   enabled: !!supabaseUser?.id
-  // });
-
-  // Grabbing the number of unread notifications
-  // const { data: res } = useQuery({
-  //   queryKey: [NotificationQueryKey.NotificationView, supabaseUser?.id],
-  //   queryFn: () => fetchNotifications(supabaseUser?.id!),
-  //   onError: (err) => {
-  //     console.log('err', err);
-  //   },
-  //   enabled: !!supabaseUser?.id
-  // });
-
-  // const toggleMobileNav = () => {
-  //   setIsMobileNavOpen((prev) => {
-  //     // document.body.classList.toggle("overflow-hidden", !prev);
-  //     return !prev;
-  //   });
-  // };
-
-  // const toggleMobileNotificationMenu = () => {
-  //   setIsMobileNotificationMenuOpen((prev) => {
-  //     // document.body.classList.toggle("overflow-hidden", !prev);
-  //     return !prev;
-  //   });
-  //   // document.body.classList.toggle("overflow-hidden", isMobileNavOpen);
-  // };
-
-  // const unSeenNotifications =
-  //   res?.data?.notifications?.filter((n) => n.is_seen === false).length ||
-  //   0 +
-  //     (res?.data?.connection_requests?.filter((n) => n.is_seen === false)
-  //       .length || 0);
-
-  // const MobileNavLinks = [
-  //   {
-  //     label: 'Your Profile',
-  //     url: `/p/${userProfile?.handle}`
-  //   },
-  //   { label: 'Deal Dashboard', url: '/account/deals' },
-  //   { label: 'Settings', url: '/account' }
-  // ];
   return (
     <>
-      {/* {!supabaseUser && (
-        <LoginOrSignupModal
-          open={isAuthModalOpen}
-          setOpen={setOpenAuthModal}
-          variant={authModalVariant}
-        />
-      )}
-      {userProfile && (
-        <EditProfileModal
-          profile={userProfile}
-          isOpen={isUpdateModalOpen || !userProfile.handle}
-          setIsOpen={setUpdateModalOpen}
-          referral={true}
-        />
-      )} */}
-
       <header className="pt-4 pb-[14px] bg-white border-b border-b-slate-200 min-h-full">
         <div className="max-w-7xl mx-auto lg:px-8 sm:px-6 px-4">
           <nav className="flex justify-between items-center">
@@ -178,7 +47,7 @@ export function NavBar({ loading }: HeaderProps) {
                 )}
               </div>
             </div>
-            {user && !loading && <SearchBox />}
+            {user && <SearchBox />}
             <div className="mr-2 select">
               <select
                 onChange={(e) => setCurrentOrganization(e.target.value)}
@@ -215,20 +84,6 @@ export function NavBar({ loading }: HeaderProps) {
                     <DropdownMenu logout={() => signOut()} />
                     <Menu as="div" className="relative inline-block text-left ">
                       <>
-                        <div>
-                          <Menu.Button className="mr-1.5 relative">
-                            {/* <FontAwesomeIcon
-                              icon={faBell}
-                              className="hover:cursor-pointer hover:text-gray-500 text-gray-400 w-[21px] h-6"
-                            /> */}
-                            {/* {unSeenNotifications > 0 && (
-                              <NotificationNumber
-                                amount={unSeenNotifications}
-                              />
-                            )} */}
-                          </Menu.Button>
-                        </div>
-
                         <Transition
                           as={Fragment}
                           enter="transition ease-out duration-100"

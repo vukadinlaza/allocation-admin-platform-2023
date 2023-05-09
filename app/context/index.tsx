@@ -116,7 +116,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
       {!loading && !user && <Login />}
       {!loading && user && (
         <main>
-          <NavBar loading={loading} />
+          <NavBar />
           <div className="p-4">{children}</div>
           <SlideOver open={open} setOpen={setOpen} data={slideOverData} />
           <ToastContainer />

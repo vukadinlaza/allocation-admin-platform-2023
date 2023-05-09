@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import List from './List';
 import MissingData from './MissingData';
 import None from './None';
-import SearchBox from './SearchBox/SearchBox';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { navigation } from '@/app/config';

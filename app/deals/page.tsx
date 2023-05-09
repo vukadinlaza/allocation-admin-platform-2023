@@ -7,7 +7,7 @@ export default function Deals() {
   const getHeader = () => {
     return {
       name: 'Deals',
-      description: 'Manage your deals.',
+      description: 'Manage deals.',
       buttons: [
         {
           title: 'Create new'

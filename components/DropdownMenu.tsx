@@ -1,5 +1,5 @@
 import React from 'react';
-import { Fragment, forwardRef } from 'react';
+import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAuthContext } from '@/app/context';

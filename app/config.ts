@@ -1,11 +1,11 @@
 export const navigation = [
   // { name: 'Home', href: '/' },
-  { name: 'SPVs', href: '/spvs', showCount: true },
-  { name: 'Funds', href: '/funds', showCount: true },
-  { name: 'Organizations', href: '/organizations', showCount: true },
-  { name: 'Entities', href: '/entities', showCount: true },
-  { name: 'Investments', href: '/investments', showCount: true },
-  { name: 'Deals Admin', href: '/deals', showCount: true, admin: true }
+  { name: 'Taxes', href: '/taxes' },
+  // { name: 'Funds', href: '/funds', showCount: true },
+  // { name: 'Organizations', href: '/organizations', showCount: true },
+  // { name: 'Entities', href: '/entities', showCount: true },
+  { name: 'Investments', href: '/investments' },
+  { name: 'Deals', href: '/deals' }
 ];
 
 export const headers_tables = {
