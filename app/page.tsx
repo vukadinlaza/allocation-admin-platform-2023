@@ -5,7 +5,7 @@ export default function Home() {
 
     <div>
       <iframe
-        src="https://allocations1.retool.com/apps/2023%20Admin%20Platform"
+        src="https://allocations1.retool.com/apps/4d203f40-f330-11ed-886b-4b9130e107d2/Admin%20Platform%20-%20Users"
         width="100%"
         height="1000px"
       ></iframe>
