@@ -6223,7 +6223,7 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==
 
-prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -6349,10 +6349,23 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-plaid-link@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-plaid-link/-/react-plaid-link-3.4.0.tgz#e52b46b564921eaa936ba6bad8ce1e5d3b94972a"
+  integrity sha512-y5VdjWQJQrFk9+4Dz5ZBVyceskulttBG/zQsWI+v9RBUEW9TitC6T2BAxmLW0TJs64UqKjTPKEcIDWFZhgB6tw==
+  dependencies:
+    prop-types "^15.7.2"
+    react-script-hook "^1.6.0"
+
 react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
+
+react-script-hook@^1.6.0:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/react-script-hook/-/react-script-hook-1.7.2.tgz#ec130d67f9a25fcde57fbfd1faa87e5b97521948"
+  integrity sha512-fhyCEfXb94fag34UPRF0zry1XGwmVY+79iibWwTqAoOiCzYJQOYTiWJ7CnqglA9tMSV8g45cQpHCMcBwr7dwhA==
 
 react@18.2.0:
   version "18.2.0"
