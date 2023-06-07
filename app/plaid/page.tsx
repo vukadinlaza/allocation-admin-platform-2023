@@ -11,9 +11,8 @@ import {
 } from 'react-plaid-link';
 
 const Plaid = () => {
-  const searchParams = new URLSearchParams(window.location.search)
-  const [dealId, setDealId] = useState<string | null>(searchParams.get('dealId'));
-  const [token, setToken] = useState<string | null>(searchParams.get('linkToken'));
+  const [dealId, setDealId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   
   const onSuccess = useCallback<PlaidLinkOnSuccess>((publicToken, metadata) => {
     window.location.href = 'https://allocations1.retool.com/apps/0329b7a0-0540-11ee-be75-f3197775bdf8/Admin_Banking/Admin_Banking_Plaid_Link?dealId=' + dealId + '&publicToken=' + publicToken;
@@ -38,6 +37,9 @@ const Plaid = () => {
   } = usePlaidLink(config);
 
   React.useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    setDealId(searchParams.get('dealId'));
+    setToken(searchParams.get('linkToken'));
     open();
   }, [ready, open]);
   
