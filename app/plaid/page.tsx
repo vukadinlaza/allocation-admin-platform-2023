@@ -11,7 +11,7 @@ import {
 } from 'react-plaid-link';
 
 const Plaid = () => {
-  const searchParams = new URLSearchParams(document.location.search)
+  const searchParams = new URLSearchParams(window.location.search)
   const [dealId, setDealId] = useState<string | null>(searchParams.get('dealId'));
   const [token, setToken] = useState<string | null>(searchParams.get('linkToken'));
   
