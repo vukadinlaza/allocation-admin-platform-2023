@@ -6,7 +6,7 @@ export default function Home() {
       height: '100vh'
     }}>
       <iframe
-        src="https://allocations1.retool.com/apps/4d203f40-f330-11ed-886b-4b9130e107d2/Admin%20Platform%20-%20Users"
+        src="https://allocations1.retool.com/apps/150ad970-0704-11ee-aaee-2f265ee17b97/Admin_Dashboard"
         width="100%"
         height="100%"
       ></iframe>
